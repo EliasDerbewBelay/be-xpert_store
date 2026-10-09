@@ -226,7 +226,10 @@ export function CheckoutClient() {
           <div className="divide-y divide-border max-h-60 overflow-y-auto pr-1">
             {items.map((item) => (
               <div key={item.id} className="py-2.5 flex items-center gap-3">
-                <div className="relative h-12 w-12 rounded bg-muted overflow-hidden shrink-0 border border-border">
+                <div
+                  className="relative h-12 w-12 rounded bg-muted overflow-hidden shrink-0 border border-border"
+                  style={{ position: "relative" }}
+                >
                   <ProductImage
                     src={item.image}
                     alt={item.title}

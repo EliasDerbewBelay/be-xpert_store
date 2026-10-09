@@ -99,7 +99,10 @@ export default async function CategoryDetailPage({ params }: PageProps) {
         </div>
 
         {category.image && (
-          <div className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-lg overflow-hidden border border-border shrink-0 bg-muted">
+          <div
+            className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-lg overflow-hidden border border-border shrink-0 bg-muted"
+            style={{ position: "relative" }}
+          >
             <ProductImage
               src={category.image}
               alt={category.name}

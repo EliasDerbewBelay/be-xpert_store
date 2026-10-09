@@ -29,6 +29,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
       <Link
         href={`/products/${item.id}`}
         className="relative h-20 w-20 sm:h-24 sm:w-24 shrink-0 rounded-md overflow-hidden bg-muted border border-border"
+        style={{ position: "relative" }}
       >
         <ProductImage
           src={item.image}

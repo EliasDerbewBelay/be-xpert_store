@@ -34,6 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Link
           href={`/products/${product.id}`}
           className="block relative aspect-square w-full overflow-hidden bg-muted"
+          style={{ position: "relative" }}
         >
           <ProductImage
             src={primaryImage}

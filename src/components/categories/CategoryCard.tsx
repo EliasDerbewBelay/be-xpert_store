@@ -16,7 +16,10 @@ export function CategoryCard({ category }: CategoryCardProps) {
       href={targetHref}
       className="group flex flex-col rounded-lg border border-border bg-card overflow-hidden transition-colors hover:border-foreground/30 shadow-sm"
     >
-      <div className="relative aspect-video w-full overflow-hidden bg-muted">
+      <div
+        className="relative aspect-video w-full overflow-hidden bg-muted"
+        style={{ position: "relative" }}
+      >
         <ProductImage
           src={category.image}
           alt={category.name}

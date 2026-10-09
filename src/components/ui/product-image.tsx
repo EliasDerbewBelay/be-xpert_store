@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image, { ImageProps } from "next/image";
 import { PLACEHOLDER_IMAGE, sanitizeImageUrl } from "@/lib/utils";
 
@@ -21,6 +21,11 @@ export function ProductImage({
   const [imgSrc, setImgSrc] = useState<string>(sanitized);
   const [hasError, setHasError] = useState<boolean>(false);
 
+  useEffect(() => {
+    setImgSrc(sanitizeImageUrl(src));
+    setHasError(false);
+  }, [src]);
+
   const handleError = () => {
     if (!hasError) {
       setHasError(true);
@@ -35,7 +40,7 @@ export function ProductImage({
       className={className}
       onError={handleError}
       fill={fill}
-      unoptimized={imgSrc.startsWith("data:")}
+      unoptimized
       {...props}
     />
   );

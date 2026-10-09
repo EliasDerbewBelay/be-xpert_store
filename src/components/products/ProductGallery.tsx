@@ -18,7 +18,10 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
   return (
     <div className="flex flex-col gap-3">
       {/* Main Image */}
-      <div className="relative aspect-square w-full rounded-lg border border-border bg-muted overflow-hidden">
+      <div
+        className="relative aspect-square w-full rounded-lg border border-border bg-muted overflow-hidden"
+        style={{ position: "relative" }}
+      >
         <ProductImage
           src={activeImage}
           alt={`${title} - view ${activeIndex + 1}`}
@@ -37,6 +40,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
               key={idx}
               type="button"
               onClick={() => setActiveIndex(idx)}
+              style={{ position: "relative" }}
               className={`relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 rounded-md overflow-hidden border-2 bg-muted transition-all cursor-pointer ${
                 activeIndex === idx
                   ? "border-primary ring-2 ring-primary/20"
