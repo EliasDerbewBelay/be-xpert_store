@@ -6,7 +6,9 @@ export function Footer() {
     <footer className="w-full border-t border-border bg-background py-8 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-foreground tracking-tight">E-Store</span>
+          <span className="font-semibold tracking-tight text-foreground">
+            Be-xpert Store
+          </span>
           <span>— Clean modern e-commerce</span>
         </div>
 
@@ -23,7 +25,8 @@ export function Footer() {
         </nav>
 
         <p className="text-xs">
-          &copy; {new Date().getFullYear()} E-Store. Powered by EscuelaJS API.
+          &copy; {new Date().getFullYear()} Be-xpert Store. Powered by EscuelaJS
+          API.
         </p>
       </div>
     </footer>

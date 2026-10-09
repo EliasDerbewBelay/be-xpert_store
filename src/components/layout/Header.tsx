@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { ShoppingCart, Search, User as UserIcon, LogOut } from "lucide-react";
+import { ShoppingBag, ShoppingCart, Search, User as UserIcon, LogOut } from "lucide-react";
 import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useCart } from "@/lib/cart/cart-context";
@@ -49,19 +49,23 @@ export function Header() {
         <div className="flex items-center gap-6">
           <Link
             href="/"
-            className="font-bold text-lg tracking-tight hover:opacity-90 transition-opacity flex items-center gap-1.5"
+            className="flex items-center gap-2 font-bold text-base tracking-tight text-foreground transition-opacity hover:opacity-90 sm:text-lg"
           >
-            <span className="bg-primary text-primary-foreground px-2 py-0.5 rounded text-sm font-extrabold">
-              E
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
+              <ShoppingBag className="h-4 w-4" aria-hidden="true" />
             </span>
-            <span>Store</span>
+            <span>
+              Be-xpert <span className="font-semibold">Store</span>
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-5 text-sm font-medium">
             <Link
               href="/"
               className={`transition-colors hover:text-foreground ${
-                pathname === "/" ? "text-foreground font-semibold" : "text-muted-foreground"
+                pathname === "/"
+                  ? "font-semibold text-blue-600 underline decoration-2 underline-offset-8 dark:text-blue-400"
+                  : "text-muted-foreground"
               }`}
             >
               Home
@@ -70,7 +74,7 @@ export function Header() {
               href="/products"
               className={`transition-colors hover:text-foreground ${
                 pathname.startsWith("/products")
-                  ? "text-foreground font-semibold"
+                  ? "font-semibold text-blue-600 underline decoration-2 underline-offset-8 dark:text-blue-400"
                   : "text-muted-foreground"
               }`}
             >
@@ -80,7 +84,7 @@ export function Header() {
               href="/categories"
               className={`transition-colors hover:text-foreground ${
                 pathname.startsWith("/categories")
-                  ? "text-foreground font-semibold"
+                  ? "font-semibold text-blue-600 underline decoration-2 underline-offset-8 dark:text-blue-400"
                   : "text-muted-foreground"
               }`}
             >
@@ -113,7 +117,7 @@ export function Header() {
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-9 pl-9 pr-4 rounded-md border border-border bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+              className="h-9 w-full rounded-full border border-border bg-secondary/70 pl-9 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </form>
         </div>
@@ -129,11 +133,9 @@ export function Header() {
               aria-label="View shopping cart"
             >
               <ShoppingCart className="h-5 w-5" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full h-4 min-w-[16px] px-1 flex items-center justify-center">
-                  {totalItems > 99 ? "99+" : totalItems}
-                </span>
-              )}
+              <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold text-white">
+                {totalItems > 99 ? "99+" : totalItems}
+              </span>
             </Button>
           </Link>
 

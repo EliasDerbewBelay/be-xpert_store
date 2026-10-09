@@ -20,11 +20,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "E-Store | Modern E-Commerce",
-    template: "%s | E-Store",
+    default: "Be-xpert Store | Everything in One Place",
+    template: "%s | Be-xpert Store",
   },
   description:
-    "A clean, modern, minimal e-commerce web application powered by the EscuelaJS API.",
+    "Discover high-quality products, from the latest tech gadgets to everyday essentials. Shop with confidence at Be-xpert Store.",
 };
 
 export default function RootLayout({

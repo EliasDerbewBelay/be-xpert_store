@@ -54,7 +54,7 @@ export function MobileMenu() {
         <div className="space-y-6">
           <SheetHeader className="text-left pb-4 border-b border-border">
             <SheetTitle className="text-lg font-bold tracking-tight">
-              E-Store
+              Be-xpert Store
             </SheetTitle>
           </SheetHeader>
 
