@@ -50,3 +50,36 @@ export async function getRelatedProductsBySlug(
     options
   );
 }
+
+export async function createProduct(
+  data: import("@/types").CreateProductRequest,
+  options?: RequestInit
+): Promise<Product> {
+  return apiClient<Product>("/products", {
+    method: "POST",
+    body: JSON.stringify(data),
+    ...options,
+  });
+}
+
+export async function updateProduct(
+  id: number | string,
+  data: import("@/types").UpdateProductRequest,
+  options?: RequestInit
+): Promise<Product> {
+  return apiClient<Product>(`/products/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    ...options,
+  });
+}
+
+export async function deleteProduct(
+  id: number | string,
+  options?: RequestInit
+): Promise<boolean> {
+  return apiClient<boolean>(`/products/${id}`, {
+    method: "DELETE",
+    ...options,
+  });
+}

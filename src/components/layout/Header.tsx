@@ -86,6 +86,21 @@ export function Header() {
             >
               Categories
             </Link>
+            {user?.role === "admin" && (
+              <Link
+                href="/admin"
+                className={`transition-colors hover:text-foreground flex items-center gap-1 ${
+                  pathname.startsWith("/admin")
+                    ? "text-foreground font-semibold"
+                    : "text-muted-foreground"
+                }`}
+              >
+                <span>Admin</span>
+                <span className="bg-primary text-primary-foreground text-[10px] px-1.5 py-0.2 rounded-full font-bold">
+                  Panel
+                </span>
+              </Link>
+            )}
           </nav>
         </div>
 
@@ -153,6 +168,13 @@ export function Header() {
                       Profile
                     </Link>
                   </DropdownMenuItem>
+                  {user?.role === "admin" && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin" className="cursor-pointer font-medium text-primary">
+                        Admin Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem asChild>
                     <Link href="/cart" className="cursor-pointer">
                       Cart ({totalItems})

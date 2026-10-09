@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Home, ShoppingBag, Grid, User as UserIcon, LogOut } from "lucide-react";
+import { Menu, Home, ShoppingBag, Grid, User as UserIcon, LogOut, ShieldCheck } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -94,6 +94,21 @@ export function MobileMenu() {
                     <UserIcon className="h-4 w-4" />
                     <span>Profile ({user.name})</span>
                   </Link>
+
+                  {user.role === "admin" && (
+                    <Link
+                      href="/admin"
+                      onClick={handleLinkClick}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                        pathname.startsWith("/admin")
+                          ? "bg-secondary text-foreground font-semibold"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                      <span>Admin Dashboard</span>
+                    </Link>
+                  )}
                   <button
                     onClick={handleLogout}
                     className="flex w-full items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"

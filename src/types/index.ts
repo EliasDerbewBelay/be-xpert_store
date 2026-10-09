@@ -85,3 +85,20 @@ export interface ProductFilterParams {
   offset?: number;
   limit?: number;
 }
+
+export interface CreateProductRequest {
+  title: string;
+  price: number;
+  description: string;
+  categoryId: number;
+  images: string[];
+}
+
+export interface UpdateProductRequest {
+  title: string;
+  price: number;
+  description: string;
+  categoryId: number;
+  images: string[];
+}
+
