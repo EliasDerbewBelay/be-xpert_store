@@ -31,3 +31,8 @@ export async function registerUser(
     body: JSON.stringify(payload),
   });
 }
+
+export async function getUsers(options?: RequestInit): Promise<User[]> {
+  const users = await apiClient<User[]>("/users", options);
+  return Array.isArray(users) ? users : [];
+}

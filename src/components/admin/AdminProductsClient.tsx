@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   Plus,
   Search,
@@ -9,20 +10,17 @@ import {
   Trash2,
   ExternalLink,
   RotateCw,
-  Package,
-  Layers,
-  ShieldCheck,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import type { Category, Product } from "@/types";
-import { getProducts } from "@/lib/api/products";
+import { getProducts, getProduct } from "@/lib/api/products";
 import { getCategories } from "@/lib/api/categories";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, cn } from "@/lib/utils";
+import { getCategoryBadgeClass, formatAdminDate } from "@/lib/admin/utils";
 import { ProductImage } from "@/components/ui/product-image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
@@ -33,31 +31,33 @@ import {
 } from "@/components/ui/select";
 import { ProductFormDialog } from "./ProductFormDialog";
 import { DeleteProductDialog } from "./DeleteProductDialog";
-import { useAuth } from "@/lib/auth/auth-context";
 
 const PAGE_SIZE = 10;
 
-export function AdminDashboardClient() {
-  const { user } = useAuth();
+export function AdminProductsClient() {
+  const searchParams = useSearchParams();
+  const titleFromQuery = searchParams.get("title") || "";
+  const editId = searchParams.get("edit");
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filters
-  const [searchTitle, setSearchTitle] = useState("");
+  const [searchTitle, setSearchTitle] = useState(titleFromQuery);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [page, setPage] = useState(1);
 
-  // Modals state
   const [formOpen, setFormOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
-
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
-  // Load categories
+  useEffect(() => {
+    setSearchTitle(titleFromQuery);
+    setPage(1);
+  }, [titleFromQuery]);
+
   useEffect(() => {
     async function loadCats() {
       try {
@@ -70,7 +70,28 @@ export function AdminDashboardClient() {
     loadCats();
   }, []);
 
-  // Fetch products
+  useEffect(() => {
+    if (!editId) return;
+    let cancelled = false;
+
+    async function openEdit() {
+      try {
+        const product = await getProduct(editId!);
+        if (!cancelled && product) {
+          setProductToEdit(product);
+          setFormOpen(true);
+        }
+      } catch (err) {
+        console.error("Failed to load product for edit:", err);
+      }
+    }
+
+    openEdit();
+    return () => {
+      cancelled = true;
+    };
+  }, [editId]);
+
   const loadProducts = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -99,7 +120,6 @@ export function AdminDashboardClient() {
     const timer = setTimeout(() => {
       loadProducts();
     }, 200);
-
     return () => clearTimeout(timer);
   }, [loadProducts]);
 
@@ -133,84 +153,34 @@ export function AdminDashboardClient() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border">
+    <div className="mx-auto max-w-7xl space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Admin Dashboard
-            </h1>
-            <Badge variant="secondary" className="gap-1 font-semibold text-xs">
-              <ShieldCheck className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
-              <span>Admin</span>
-            </Badge>
-          </div>
-          <p className="text-sm text-muted-foreground mt-1">
-            Manage product catalog, inventory, and listings directly with the EscuelaJS API.
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-foreground">
+            Products
+          </h1>
+          <p className="mt-1 text-sm text-slate-500 dark:text-muted-foreground">
+            Create, edit, and manage your catalog inventory.
           </p>
         </div>
-
-        <div className="flex items-center gap-2.5">
-          <Button asChild variant="outline" size="sm">
-            <Link href="/products" className="gap-1.5 text-xs">
-              <ExternalLink className="h-3.5 w-3.5" />
-              <span>View Storefront</span>
-            </Link>
-          </Button>
-
-          <Button onClick={handleOpenCreate} size="sm" className="gap-1.5 text-xs">
-            <Plus className="h-4 w-4" />
-            <span>Add Product</span>
-          </Button>
-        </div>
+        <Button onClick={handleOpenCreate} className="gap-1.5 bg-blue-600 hover:bg-blue-700">
+          <Plus className="h-4 w-4" />
+          Add Product
+        </Button>
       </div>
 
-      {/* Overview Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="rounded-lg border border-border bg-card p-5 space-y-1">
-          <div className="flex items-center justify-between text-muted-foreground">
-            <span className="text-xs uppercase tracking-wider font-medium">Catalog Items</span>
-            <Package className="h-4 w-4" />
-          </div>
-          <p className="text-2xl font-bold">{products.length}</p>
-          <p className="text-xs text-muted-foreground">Active in catalog</p>
-        </div>
-
-        <div className="rounded-lg border border-border bg-card p-5 space-y-1">
-          <div className="flex items-center justify-between text-muted-foreground">
-            <span className="text-xs uppercase tracking-wider font-medium">Categories</span>
-            <Layers className="h-4 w-4" />
-          </div>
-          <p className="text-2xl font-bold">{categories.length}</p>
-          <p className="text-xs text-muted-foreground">Available departments</p>
-        </div>
-
-        <div className="rounded-lg border border-border bg-card p-5 space-y-1">
-          <div className="flex items-center justify-between text-muted-foreground">
-            <span className="text-xs uppercase tracking-wider font-medium">Logged in Admin</span>
-            <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-          </div>
-          <p className="text-base font-semibold truncate">{user?.name || "Admin"}</p>
-          <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
-        </div>
-      </div>
-
-      {/* Search, Filter & Action Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        <div className="flex flex-1 items-center gap-2 max-w-md">
-          <div className="relative w-full">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              value={searchTitle}
-              onChange={(e) => {
-                setSearchTitle(e.target.value);
-                setPage(1);
-              }}
-              placeholder="Search products by title..."
-              className="pl-9 h-9"
-            />
-          </div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full max-w-md">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            value={searchTitle}
+            onChange={(e) => {
+              setSearchTitle(e.target.value);
+              setPage(1);
+            }}
+            placeholder="Search products by title..."
+            className="h-9 rounded-xl pl-9"
+          />
         </div>
 
         <div className="flex items-center gap-2">
@@ -221,7 +191,7 @@ export function AdminDashboardClient() {
               setPage(1);
             }}
           >
-            <SelectTrigger className="w-[160px] h-9 text-xs">
+            <SelectTrigger className="h-9 w-[160px] rounded-xl text-xs">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
@@ -238,7 +208,7 @@ export function AdminDashboardClient() {
             variant="outline"
             size="icon"
             onClick={() => loadProducts()}
-            className="h-9 w-9 shrink-0"
+            className="h-9 w-9 shrink-0 rounded-xl"
             aria-label="Refresh product list"
           >
             <RotateCw className="h-4 w-4" />
@@ -246,48 +216,52 @@ export function AdminDashboardClient() {
         </div>
       </div>
 
-      {/* Products Table */}
-      <div className="rounded-lg border border-border bg-card overflow-hidden shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-border dark:bg-card">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-muted/50 border-b border-border text-xs text-muted-foreground uppercase font-medium">
+            <thead className="border-b border-slate-100 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-400 dark:border-border dark:bg-muted/40 dark:text-muted-foreground">
               <tr>
-                <th scope="col" className="px-4 py-3">Product</th>
-                <th scope="col" className="px-4 py-3 hidden sm:table-cell">Category</th>
-                <th scope="col" className="px-4 py-3">Price</th>
-                <th scope="col" className="px-4 py-3 hidden md:table-cell">ID</th>
-                <th scope="col" className="px-4 py-3 text-right">Actions</th>
+                <th className="px-4 py-3">Product</th>
+                <th className="hidden px-4 py-3 sm:table-cell">Category</th>
+                <th className="px-4 py-3">Price</th>
+                <th className="hidden px-4 py-3 md:table-cell">Created</th>
+                <th className="px-4 py-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-slate-100 dark:divide-border">
               {isLoading ? (
                 Array.from({ length: 5 }).map((_, idx) => (
                   <tr key={idx}>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <Skeleton className="h-10 w-10 rounded shrink-0" />
+                        <Skeleton className="h-10 w-10 rounded-lg" />
                         <Skeleton className="h-4 w-48" />
                       </div>
                     </td>
-                    <td className="px-4 py-3 hidden sm:table-cell">
+                    <td className="hidden px-4 py-3 sm:table-cell">
                       <Skeleton className="h-4 w-20" />
                     </td>
                     <td className="px-4 py-3">
                       <Skeleton className="h-4 w-16" />
                     </td>
-                    <td className="px-4 py-3 hidden md:table-cell">
-                      <Skeleton className="h-4 w-10" />
+                    <td className="hidden px-4 py-3 md:table-cell">
+                      <Skeleton className="h-4 w-24" />
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <Skeleton className="h-8 w-20 ml-auto" />
+                      <Skeleton className="ml-auto h-8 w-20" />
                     </td>
                   </tr>
                 ))
               ) : error ? (
                 <tr>
                   <td colSpan={5} className="p-8 text-center text-muted-foreground">
-                    <p className="text-destructive font-medium">{error}</p>
-                    <Button onClick={() => loadProducts()} variant="outline" size="sm" className="mt-2">
+                    <p className="font-medium text-destructive">{error}</p>
+                    <Button
+                      onClick={() => loadProducts()}
+                      variant="outline"
+                      size="sm"
+                      className="mt-2"
+                    >
                       Try Again
                     </Button>
                   </td>
@@ -308,14 +282,11 @@ export function AdminDashboardClient() {
                   return (
                     <tr
                       key={product.id}
-                      className="hover:bg-muted/30 transition-colors"
+                      className="transition-colors hover:bg-slate-50 dark:hover:bg-muted/30"
                     >
                       <td className="px-4 py-3">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div
-                            className="relative h-10 w-10 rounded overflow-hidden bg-muted border border-border shrink-0"
-                            style={{ position: "relative" }}
-                          >
+                        <div className="flex min-w-0 items-center gap-3">
+                          <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-muted dark:border-border">
                             <ProductImage
                               src={imageSrc}
                               alt={product.title}
@@ -327,29 +298,34 @@ export function AdminDashboardClient() {
                           <div className="min-w-0">
                             <Link
                               href={`/products/${product.id}`}
-                              className="font-medium text-foreground hover:underline truncate block"
+                              className="block truncate font-medium text-foreground hover:underline"
                             >
                               {product.title}
                             </Link>
-                            <span className="text-xs text-muted-foreground sm:hidden block truncate">
+                            <span className="block truncate text-xs text-muted-foreground sm:hidden">
                               {product.category?.name}
                             </span>
                           </div>
                         </div>
                       </td>
 
-                      <td className="px-4 py-3 hidden sm:table-cell">
-                        <Badge variant="outline" className="text-xs font-normal">
+                      <td className="hidden px-4 py-3 sm:table-cell">
+                        <span
+                          className={cn(
+                            "inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium",
+                            getCategoryBadgeClass(product.category?.name)
+                          )}
+                        >
                           {product.category?.name || "Uncategorized"}
-                        </Badge>
+                        </span>
                       </td>
 
                       <td className="px-4 py-3 font-semibold text-foreground">
                         {formatPrice(product.price)}
                       </td>
 
-                      <td className="px-4 py-3 hidden md:table-cell font-mono text-xs text-muted-foreground">
-                        #{product.id}
+                      <td className="hidden px-4 py-3 text-xs text-muted-foreground md:table-cell">
+                        {formatAdminDate(product.creationAt)}
                       </td>
 
                       <td className="px-4 py-3 text-right">
@@ -395,39 +371,35 @@ export function AdminDashboardClient() {
           </table>
         </div>
 
-        {/* Pagination Bar */}
         {!isLoading && !error && (products.length > 0 || page > 1) && (
-          <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-card">
+          <div className="flex items-center justify-between border-t border-slate-100 px-4 py-3 dark:border-border">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              className="gap-1 text-xs"
+              className="gap-1 rounded-xl text-xs"
             >
               <ChevronLeft className="h-3.5 w-3.5" />
-              <span>Previous</span>
+              Previous
             </Button>
 
-            <span className="text-xs text-muted-foreground">
-              Page {page}
-            </span>
+            <span className="text-xs text-muted-foreground">Page {page}</span>
 
             <Button
               variant="outline"
               size="sm"
               onClick={() => setPage((p) => p + 1)}
               disabled={products.length < PAGE_SIZE}
-              className="gap-1 text-xs"
+              className="gap-1 rounded-xl text-xs"
             >
-              <span>Next</span>
+              Next
               <ChevronRight className="h-3.5 w-3.5" />
             </Button>
           </div>
         )}
       </div>
 
-      {/* Create / Edit Dialog */}
       <ProductFormDialog
         open={formOpen}
         onOpenChange={setFormOpen}
@@ -436,7 +408,6 @@ export function AdminDashboardClient() {
         onSuccess={handleFormSuccess}
       />
 
-      {/* Delete Confirmation Dialog */}
       <DeleteProductDialog
         open={deleteOpen}
         onOpenChange={setDeleteOpen}

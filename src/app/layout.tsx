@@ -5,8 +5,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { AuthProvider } from "@/lib/auth/auth-context";
 import { CartProvider } from "@/lib/cart/cart-context";
 import { ToastProvider } from "@/lib/toast/toast-context";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { AppShell } from "@/components/layout/AppShell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,11 +47,7 @@ export default function RootLayout({
           <AuthProvider>
             <CartProvider>
               <ToastProvider>
-                <div className="flex min-h-screen flex-col">
-                  <Header />
-                  <main className="flex-1">{children}</main>
-                  <Footer />
-                </div>
+                <AppShell>{children}</AppShell>
               </ToastProvider>
             </CartProvider>
           </AuthProvider>
