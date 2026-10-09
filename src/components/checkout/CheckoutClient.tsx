@@ -201,7 +201,7 @@ export function CheckoutClient() {
 
             <div className="rounded-lg border border-border bg-card p-6 space-y-3">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                <ShieldCheck className="h-4 w-4 text-primary" />
                 <span>Payment upon delivery active. No upfront credit card required.</span>
               </div>
             </div>

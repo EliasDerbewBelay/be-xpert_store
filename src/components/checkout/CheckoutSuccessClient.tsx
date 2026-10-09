@@ -30,7 +30,7 @@ export function CheckoutSuccessClient() {
 
   return (
     <div className="max-w-lg mx-auto py-12 px-4 text-center space-y-6">
-      <div className="mx-auto h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+      <div className="mx-auto h-16 w-16 rounded-full bg-accent text-primary flex items-center justify-center">
         <CheckCircle2 className="h-10 w-10" />
       </div>
 

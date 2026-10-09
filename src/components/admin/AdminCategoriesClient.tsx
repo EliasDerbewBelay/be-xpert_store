@@ -45,18 +45,18 @@ export function AdminCategoriesClient() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-foreground">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">
           Categories
         </h1>
-        <p className="mt-1 text-sm text-slate-500 dark:text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           Browse storefront departments powered by EscuelaJS.
         </p>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-border dark:bg-card">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-100 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-400 dark:border-border dark:bg-muted/40 dark:text-muted-foreground">
+            <thead className="border-b border-border bg-secondary text-xs font-medium uppercase tracking-wide text-muted-foreground dark:border-border dark:bg-muted/40 dark:text-muted-foreground">
               <tr>
                 <th className="px-4 py-3">Category</th>
                 <th className="hidden px-4 py-3 sm:table-cell">Slug</th>
@@ -64,7 +64,7 @@ export function AdminCategoriesClient() {
                 <th className="px-4 py-3 text-right">View</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-border">
+            <tbody className="divide-y divide-border">
               {isLoading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i}>
@@ -101,11 +101,11 @@ export function AdminCategoriesClient() {
                 categories.map((category) => (
                   <tr
                     key={category.id}
-                    className="transition-colors hover:bg-slate-50 dark:hover:bg-muted/30"
+                    className="transition-colors hover:bg-secondary dark:hover:bg-muted/30"
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-muted dark:border-border">
+                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-border bg-muted dark:border-border">
                           <ProductImage
                             src={category.image}
                             alt={category.name}
@@ -115,7 +115,7 @@ export function AdminCategoriesClient() {
                           />
                         </div>
                         <div className="flex items-center gap-2">
-                          <Tag className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
+                          <Tag className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
                           <span
                             className={cn(
                               "inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium",
@@ -140,7 +140,7 @@ export function AdminCategoriesClient() {
                             ? `/categories/${category.slug}`
                             : `/categories`
                         }
-                        className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                        className="text-sm font-medium text-primary hover:text-primary/80"
                       >
                         Open
                       </Link>

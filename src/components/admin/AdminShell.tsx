@@ -64,8 +64,8 @@ function NavLinks({
             className={cn(
               "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
               active
-                ? "bg-blue-600 text-white shadow-sm"
-                : "text-slate-300 hover:bg-white/10 hover:text-white"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-white/70 hover:bg-white/10 hover:text-white"
             )}
           >
             <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -94,7 +94,7 @@ function SidebarFooter({ onNavigate }: { onNavigate?: () => void }) {
       <Link
         href="/"
         onClick={onNavigate}
-        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:bg-white/10 hover:text-white"
+        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
       >
         <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
         Back to Store
@@ -102,7 +102,7 @@ function SidebarFooter({ onNavigate }: { onNavigate?: () => void }) {
       <button
         type="button"
         onClick={handleLogout}
-        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:bg-white/10 hover:text-white"
+        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
       >
         <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
         Logout
@@ -114,7 +114,7 @@ function SidebarFooter({ onNavigate }: { onNavigate?: () => void }) {
 function SidebarBrand() {
   return (
     <Link href="/admin" className="flex items-center gap-2.5 px-5 py-5">
-      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white">
+      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
         <ShoppingBag className="h-4 w-4" aria-hidden="true" />
       </span>
       <span className="text-base font-bold tracking-tight text-white">
@@ -149,9 +149,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const closeMobile = () => setMobileOpen(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900 dark:bg-background dark:text-foreground">
+    <div className="flex min-h-screen bg-secondary/50 text-foreground">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-slate-900 dark:bg-slate-950 lg:flex">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-brand-dark lg:flex">
         <SidebarBrand />
         <NavLinks pathname={pathname} />
         <SidebarFooter />
@@ -166,14 +166,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             aria-label="Close menu"
             onClick={closeMobile}
           />
-          <aside className="relative flex h-full w-72 max-w-[85vw] flex-col bg-slate-900 shadow-xl">
+          <aside className="relative flex h-full w-72 max-w-[85vw] flex-col bg-brand-dark shadow-xl">
             <div className="flex items-center justify-between pr-3">
               <SidebarBrand />
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={closeMobile}
-                className="h-9 w-9 text-slate-300 hover:bg-white/10 hover:text-white"
+                className="h-9 w-9 text-white/70 hover:bg-white/10 hover:text-white"
                 aria-label="Close navigation"
               >
                 <X className="h-5 w-5" />
@@ -187,7 +187,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-slate-200 bg-white/90 px-4 backdrop-blur dark:border-border dark:bg-card/90 sm:px-6">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-card/90 px-4 backdrop-blur sm:px-6">
           <Button
             variant="ghost"
             size="icon"
@@ -199,13 +199,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </Button>
 
           <form onSubmit={handleAdminSearch} className="relative max-w-md flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="search"
               value={adminSearch}
               onChange={(e) => setAdminSearch(e.target.value)}
               placeholder="Search in admin..."
-              className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:border-border dark:bg-secondary dark:text-foreground"
+              className="h-10 w-full rounded-xl border border-border bg-secondary pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 dark:border-border dark:bg-secondary dark:text-foreground"
             />
           </form>
 
@@ -221,7 +221,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 >
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={user?.avatar} alt={user?.name || "Admin"} />
-                    <AvatarFallback className="bg-slate-900 text-xs font-semibold text-white dark:bg-slate-700">
+                    <AvatarFallback className="bg-brand-dark text-xs font-semibold text-white">
                       {(user?.name || "A").charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>

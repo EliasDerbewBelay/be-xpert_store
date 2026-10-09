@@ -156,14 +156,14 @@ export function AdminProductsClient() {
     <div className="mx-auto max-w-7xl space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-foreground">
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
             Products
           </h1>
-          <p className="mt-1 text-sm text-slate-500 dark:text-muted-foreground">
+          <p className="mt-1 text-sm text-muted-foreground">
             Create, edit, and manage your catalog inventory.
           </p>
         </div>
-        <Button onClick={handleOpenCreate} className="gap-1.5 bg-blue-600 hover:bg-blue-700">
+        <Button onClick={handleOpenCreate} className="gap-1.5 bg-primary hover:bg-primary/90">
           <Plus className="h-4 w-4" />
           Add Product
         </Button>
@@ -216,10 +216,10 @@ export function AdminProductsClient() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-border dark:bg-card">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-100 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-400 dark:border-border dark:bg-muted/40 dark:text-muted-foreground">
+            <thead className="border-b border-border bg-secondary text-xs font-medium uppercase tracking-wide text-muted-foreground dark:border-border dark:bg-muted/40 dark:text-muted-foreground">
               <tr>
                 <th className="px-4 py-3">Product</th>
                 <th className="hidden px-4 py-3 sm:table-cell">Category</th>
@@ -228,7 +228,7 @@ export function AdminProductsClient() {
                 <th className="px-4 py-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-border">
+            <tbody className="divide-y divide-border">
               {isLoading ? (
                 Array.from({ length: 5 }).map((_, idx) => (
                   <tr key={idx}>
@@ -282,11 +282,11 @@ export function AdminProductsClient() {
                   return (
                     <tr
                       key={product.id}
-                      className="transition-colors hover:bg-slate-50 dark:hover:bg-muted/30"
+                      className="transition-colors hover:bg-secondary dark:hover:bg-muted/30"
                     >
                       <td className="px-4 py-3">
                         <div className="flex min-w-0 items-center gap-3">
-                          <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-muted dark:border-border">
+                          <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-border bg-muted dark:border-border">
                             <ProductImage
                               src={imageSrc}
                               alt={product.title}
@@ -372,7 +372,7 @@ export function AdminProductsClient() {
         </div>
 
         {!isLoading && !error && (products.length > 0 || page > 1) && (
-          <div className="flex items-center justify-between border-t border-slate-100 px-4 py-3 dark:border-border">
+          <div className="flex items-center justify-between border-t border-border px-4 py-3 dark:border-border">
             <Button
               variant="outline"
               size="sm"

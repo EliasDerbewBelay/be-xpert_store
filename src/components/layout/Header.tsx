@@ -51,7 +51,7 @@ export function Header() {
             href="/"
             className="flex items-center gap-2 font-bold text-base tracking-tight text-foreground transition-opacity hover:opacity-90 sm:text-lg"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <ShoppingBag className="h-4 w-4" aria-hidden="true" />
             </span>
             <span>
@@ -64,7 +64,7 @@ export function Header() {
               href="/"
               className={`transition-colors hover:text-foreground ${
                 pathname === "/"
-                  ? "font-semibold text-blue-600 underline decoration-2 underline-offset-8 dark:text-blue-400"
+                  ? "font-semibold text-primary underline decoration-2 underline-offset-8"
                   : "text-muted-foreground"
               }`}
             >
@@ -74,7 +74,7 @@ export function Header() {
               href="/products"
               className={`transition-colors hover:text-foreground ${
                 pathname.startsWith("/products")
-                  ? "font-semibold text-blue-600 underline decoration-2 underline-offset-8 dark:text-blue-400"
+                  ? "font-semibold text-primary underline decoration-2 underline-offset-8"
                   : "text-muted-foreground"
               }`}
             >
@@ -84,7 +84,7 @@ export function Header() {
               href="/categories"
               className={`transition-colors hover:text-foreground ${
                 pathname.startsWith("/categories")
-                  ? "font-semibold text-blue-600 underline decoration-2 underline-offset-8 dark:text-blue-400"
+                  ? "font-semibold text-primary underline decoration-2 underline-offset-8"
                   : "text-muted-foreground"
               }`}
             >
@@ -93,14 +93,14 @@ export function Header() {
             {user?.role === "admin" && (
               <Link
                 href="/admin"
-                className={`transition-colors hover:text-foreground flex items-center gap-1 ${
+                className={`flex items-center gap-1 transition-colors hover:text-foreground ${
                   pathname.startsWith("/admin")
-                    ? "text-foreground font-semibold"
+                    ? "font-semibold text-primary"
                     : "text-muted-foreground"
                 }`}
               >
                 <span>Admin</span>
-                <span className="bg-primary text-primary-foreground text-[10px] px-1.5 py-0.2 rounded-full font-bold">
+                <span className="rounded-full bg-primary px-1.5 py-0.2 text-[10px] font-bold text-primary-foreground">
                   Panel
                 </span>
               </Link>
@@ -117,7 +117,7 @@ export function Header() {
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-9 w-full rounded-full border border-border bg-secondary/70 pl-9 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="h-9 w-full rounded-full border border-border bg-secondary/70 pl-9 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
             />
           </form>
         </div>
@@ -133,7 +133,7 @@ export function Header() {
               aria-label="View shopping cart"
             >
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold text-white">
+              <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
                 {totalItems > 99 ? "99+" : totalItems}
               </span>
             </Button>

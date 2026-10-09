@@ -61,13 +61,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           >
             <div className="flex items-center gap-2.5">
               {t.type === "success" && (
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
               )}
               {t.type === "error" && (
                 <AlertCircle className="w-4 h-4 text-destructive shrink-0" />
               )}
               {t.type === "info" && (
-                <Info className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+                <Info className="w-4 h-4 text-primary shrink-0" />
               )}
               <span className="font-medium">{t.message}</span>
             </div>

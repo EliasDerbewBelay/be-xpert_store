@@ -69,7 +69,7 @@ export function MobileMenu() {
                   onClick={handleLinkClick}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-secondary text-foreground font-semibold"
+                      ? "bg-accent font-semibold text-primary"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
@@ -87,7 +87,7 @@ export function MobileMenu() {
                     onClick={handleLinkClick}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                       pathname === "/profile"
-                        ? "bg-secondary text-foreground font-semibold"
+                        ? "bg-accent font-semibold text-primary"
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                   >
@@ -101,11 +101,11 @@ export function MobileMenu() {
                       onClick={handleLinkClick}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                         pathname.startsWith("/admin")
-                          ? "bg-secondary text-foreground font-semibold"
+                          ? "bg-accent font-semibold text-primary"
                           : "text-muted-foreground hover:bg-muted hover:text-foreground"
                       }`}
                     >
-                      <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                      <ShieldCheck className="h-4 w-4 text-primary" />
                       <span>Admin Dashboard</span>
                     </Link>
                   )}

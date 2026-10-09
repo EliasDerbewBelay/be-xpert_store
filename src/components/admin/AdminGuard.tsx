@@ -25,8 +25,8 @@ export function AdminGuard({ children }: AdminGuardProps) {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen bg-slate-50 dark:bg-background">
-        <div className="hidden w-64 shrink-0 bg-slate-900 lg:block" />
+      <div className="flex min-h-screen bg-secondary/50">
+        <div className="hidden w-64 shrink-0 bg-brand-dark lg:block" />
         <div className="flex-1 space-y-6 p-6 sm:p-8">
           <Skeleton className="h-8 w-64" />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -47,7 +47,7 @@ export function AdminGuard({ children }: AdminGuardProps) {
 
   if (user.role !== "admin") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 dark:bg-background">
+      <div className="flex min-h-screen items-center justify-center bg-secondary px-4 dark:bg-background">
         <div className="max-w-md space-y-5 text-center">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 text-amber-600 dark:bg-amber-950/50 dark:text-amber-400">
             <ShieldAlert className="h-8 w-8" />

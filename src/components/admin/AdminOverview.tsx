@@ -86,7 +86,7 @@ export function AdminOverview() {
         detail: p.title,
         time: formatRelativeTime(p.creationAt || p.updatedAt),
         icon: Plus,
-        iconClass: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400",
+        iconClass: "bg-accent text-primary",
       });
     });
 
@@ -97,7 +97,7 @@ export function AdminOverview() {
         detail: c.name,
         time: formatRelativeTime(c.creationAt || c.updatedAt),
         icon: Tag,
-        iconClass: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400",
+        iconClass: "bg-accent text-primary",
       });
     });
 
@@ -108,7 +108,7 @@ export function AdminOverview() {
         detail: u.email,
         time: formatRelativeTime(u.creationAt || u.updatedAt),
         icon: UserPlus,
-        iconClass: "bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-400",
+        iconClass: "bg-accent text-primary",
       });
     });
 
@@ -119,7 +119,7 @@ export function AdminOverview() {
         detail: products[2].title,
         time: formatRelativeTime(products[2].updatedAt || products[2].creationAt),
         icon: Pencil,
-        iconClass: "bg-sky-50 text-sky-600 dark:bg-sky-950/50 dark:text-sky-400",
+        iconClass: "bg-accent text-primary",
       });
     }
 
@@ -133,7 +133,7 @@ export function AdminOverview() {
       trend: "↑ 12% from last week",
       trendPositive: true,
       icon: Package,
-      iconClass: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400",
+      iconClass: "bg-accent text-primary",
     },
     {
       label: "Total Categories",
@@ -141,7 +141,7 @@ export function AdminOverview() {
       trend: "↑ 0% from last week",
       trendPositive: true,
       icon: Tag,
-      iconClass: "bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-400",
+      iconClass: "bg-accent text-primary",
     },
     {
       label: "Total Users",
@@ -149,7 +149,7 @@ export function AdminOverview() {
       trend: "↑ 8% from last week",
       trendPositive: true,
       icon: UserPlus,
-      iconClass: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400",
+      iconClass: "bg-accent text-primary",
     },
     {
       label: "Total Orders",
@@ -157,7 +157,7 @@ export function AdminOverview() {
       trend: "— No change",
       trendPositive: false,
       icon: ShoppingCart,
-      iconClass: "bg-orange-50 text-orange-600 dark:bg-orange-950/50 dark:text-orange-400",
+      iconClass: "bg-secondary text-foreground",
     },
   ];
 
@@ -167,10 +167,10 @@ export function AdminOverview() {
   return (
     <div className="mx-auto max-w-7xl space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-foreground sm:text-3xl">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {greeting}, {adminName}
         </h1>
-        <p className="mt-1 text-sm text-slate-500 dark:text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           Here&apos;s what&apos;s happening with your store today.
         </p>
       </div>
@@ -180,7 +180,7 @@ export function AdminOverview() {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-border dark:bg-card"
+            className="rounded-2xl border border-border bg-card p-5 shadow-sm"
           >
             {isLoading ? (
               <div className="space-y-3">
@@ -199,18 +199,18 @@ export function AdminOverview() {
                 >
                   <stat.icon className="h-5 w-5" aria-hidden="true" />
                 </div>
-                <p className="text-sm text-slate-500 dark:text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   {stat.label}
                 </p>
-                <p className="mt-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-foreground">
+                <p className="mt-1 text-3xl font-bold tracking-tight text-foreground">
                   {stat.value}
                 </p>
                 <p
                   className={cn(
                     "mt-2 text-xs font-medium",
                     stat.trendPositive
-                      ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-slate-400 dark:text-muted-foreground"
+                      ? "text-primary"
+                      : "text-muted-foreground"
                   )}
                 >
                   {stat.trend}
@@ -223,14 +223,14 @@ export function AdminOverview() {
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         {/* Recent products */}
-        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-border dark:bg-card xl:col-span-2">
-          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 dark:border-border">
-            <h2 className="text-base font-semibold text-slate-900 dark:text-foreground">
+        <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm xl:col-span-2">
+          <div className="flex items-center justify-between border-b border-border px-5 py-4 dark:border-border">
+            <h2 className="text-base font-semibold text-foreground">
               Recent Products
             </h2>
             <Link
               href="/admin/products"
-              className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+              className="text-sm font-medium text-primary hover:text-primary/80"
             >
               View all
             </Link>
@@ -239,7 +239,7 @@ export function AdminOverview() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-100 text-xs font-medium uppercase tracking-wide text-slate-400 dark:border-border dark:text-muted-foreground">
+                <tr className="border-b border-border text-xs font-medium uppercase tracking-wide text-muted-foreground dark:border-border dark:text-muted-foreground">
                   <th className="px-5 py-3 font-medium">Product</th>
                   <th className="hidden px-5 py-3 font-medium sm:table-cell">
                     Category
@@ -253,7 +253,7 @@ export function AdminOverview() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-border">
+              <tbody className="divide-y divide-border">
                 {isLoading
                   ? Array.from({ length: 5 }).map((_, i) => (
                       <tr key={i}>
@@ -285,14 +285,14 @@ export function AdminOverview() {
                       return (
                         <tr
                           key={product.id}
-                          className="transition-colors hover:bg-slate-50 dark:hover:bg-muted/40"
+                          className="transition-colors hover:bg-secondary dark:hover:bg-muted/40"
                         >
                           <td className="px-5 py-3">
                             <Link
                               href={`/products/${product.id}`}
                               className="flex items-center gap-3 min-w-0"
                             >
-                              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 dark:border-border dark:bg-muted">
+                              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
                                 <ProductImage
                                   src={imageSrc}
                                   alt={product.title}
@@ -301,7 +301,7 @@ export function AdminOverview() {
                                   className="object-cover"
                                 />
                               </div>
-                              <span className="truncate font-medium text-slate-900 dark:text-foreground">
+                              <span className="truncate font-medium text-foreground">
                                 {product.title}
                               </span>
                             </Link>
@@ -316,16 +316,16 @@ export function AdminOverview() {
                               {product.category?.name || "Uncategorized"}
                             </span>
                           </td>
-                          <td className="px-5 py-3 font-semibold text-slate-900 dark:text-foreground">
+                          <td className="px-5 py-3 font-semibold text-foreground">
                             {formatPrice(product.price)}
                           </td>
-                          <td className="hidden px-5 py-3 text-slate-500 dark:text-muted-foreground md:table-cell">
+                          <td className="hidden px-5 py-3 text-muted-foreground md:table-cell">
                             {formatAdminDate(product.creationAt)}
                           </td>
                           <td className="px-5 py-3 text-right">
                             <Link
                               href={`/admin/products?edit=${product.id}`}
-                              className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-muted dark:hover:text-foreground"
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
                               aria-label={`Manage ${product.title}`}
                             >
                               <ChevronRight className="h-4 w-4" />
@@ -338,7 +338,7 @@ export function AdminOverview() {
                   <tr>
                     <td
                       colSpan={5}
-                      className="px-5 py-10 text-center text-sm text-slate-500"
+                      className="px-5 py-10 text-center text-sm text-muted-foreground"
                     >
                       No products found.
                     </td>
@@ -351,36 +351,36 @@ export function AdminOverview() {
 
         {/* Right column */}
         <div className="space-y-6">
-          <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-border dark:bg-card">
-            <h2 className="mb-4 text-base font-semibold text-slate-900 dark:text-foreground">
+          <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <h2 className="mb-4 text-base font-semibold text-foreground">
               Quick Actions
             </h2>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setFormOpen(true)}
-                className="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-4 text-center text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-border dark:bg-secondary dark:text-foreground dark:hover:border-blue-800 dark:hover:bg-blue-950/40 dark:hover:text-blue-300"
+                className="flex flex-col items-center gap-2 rounded-xl border border-border bg-secondary px-3 py-4 text-center text-sm font-medium text-foreground transition-colors hover:border-primary/30 hover:bg-accent hover:text-primary"
               >
                 <Plus className="h-5 w-5" aria-hidden="true" />
                 Add Product
               </button>
               <Link
                 href="/admin/categories"
-                className="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-4 text-center text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-border dark:bg-secondary dark:text-foreground dark:hover:border-blue-800 dark:hover:bg-blue-950/40 dark:hover:text-blue-300"
+                className="flex flex-col items-center gap-2 rounded-xl border border-border bg-secondary px-3 py-4 text-center text-sm font-medium text-foreground transition-colors hover:border-primary/30 hover:bg-accent hover:text-primary"
               >
                 <Tag className="h-5 w-5" aria-hidden="true" />
                 Manage Categories
               </Link>
               <Link
                 href="/admin/users"
-                className="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-4 text-center text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-border dark:bg-secondary dark:text-foreground dark:hover:border-blue-800 dark:hover:bg-blue-950/40 dark:hover:text-blue-300"
+                className="flex flex-col items-center gap-2 rounded-xl border border-border bg-secondary px-3 py-4 text-center text-sm font-medium text-foreground transition-colors hover:border-primary/30 hover:bg-accent hover:text-primary"
               >
                 <Users className="h-5 w-5" aria-hidden="true" />
                 View Users
               </Link>
               <Link
                 href="/"
-                className="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-4 text-center text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-border dark:bg-secondary dark:text-foreground dark:hover:border-blue-800 dark:hover:bg-blue-950/40 dark:hover:text-blue-300"
+                className="flex flex-col items-center gap-2 rounded-xl border border-border bg-secondary px-3 py-4 text-center text-sm font-medium text-foreground transition-colors hover:border-primary/30 hover:bg-accent hover:text-primary"
               >
                 <ExternalLink className="h-5 w-5" aria-hidden="true" />
                 Go to Store
@@ -388,14 +388,14 @@ export function AdminOverview() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-border dark:bg-card">
+          <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-base font-semibold text-slate-900 dark:text-foreground">
+              <h2 className="text-base font-semibold text-foreground">
                 Recent Activity
               </h2>
               <Link
                 href="/admin/products"
-                className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                className="text-sm font-medium text-primary hover:text-primary/80"
               >
                 View all
               </Link>
@@ -426,20 +426,20 @@ export function AdminOverview() {
                       <item.icon className="h-4 w-4" aria-hidden="true" />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-slate-900 dark:text-foreground">
+                      <p className="text-sm font-medium text-foreground">
                         {item.title}
                       </p>
-                      <p className="truncate text-sm text-slate-500 dark:text-muted-foreground">
+                      <p className="truncate text-sm text-muted-foreground">
                         {item.detail}
                       </p>
-                      <p className="mt-0.5 text-xs text-slate-400 dark:text-muted-foreground">
+                      <p className="mt-0.5 text-xs text-muted-foreground">
                         {item.time}
                       </p>
                     </div>
                   </li>
                 ))}
                 {activity.length === 0 && (
-                  <li className="py-4 text-center text-sm text-slate-500">
+                  <li className="py-4 text-center text-sm text-muted-foreground">
                     No recent activity yet.
                   </li>
                 )}
