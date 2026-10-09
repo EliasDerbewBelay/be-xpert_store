@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { checkEmailAvailability } from "@/lib/api/users";
 import { useToast } from "@/lib/toast/toast-context";
@@ -13,6 +13,8 @@ import { AlertCircle, Lock, Mail, User } from "lucide-react";
 
 export function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect");
   const { register } = useAuth();
   const { success } = useToast();
 
@@ -66,7 +68,11 @@ export function RegisterForm() {
       });
 
       success("Account created successfully! Please log in.");
-      router.push("/login");
+      router.push(
+        redirectTo
+          ? `/login?redirect=${encodeURIComponent(redirectTo)}`
+          : "/login"
+      );
     } catch (err) {
       const message =
         err instanceof Error
@@ -176,7 +182,11 @@ export function RegisterForm() {
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
         <Link
-          href="/login"
+          href={
+            redirectTo
+              ? `/login?redirect=${encodeURIComponent(redirectTo)}`
+              : "/login"
+          }
           className="font-medium text-foreground underline underline-offset-4 hover:opacity-80"
         >
           Sign in

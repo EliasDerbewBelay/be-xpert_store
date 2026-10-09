@@ -4,10 +4,16 @@ import React from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
 import { useCart } from "@/lib/cart/cart-context";
+import { useAuth } from "@/lib/auth/auth-context";
 import { Button } from "@/components/ui/button";
 
 export function CartSummary() {
   const { totalPrice, totalItems, clearCart } = useCart();
+  const { user, isLoading } = useAuth();
+
+  const checkoutHref = user
+    ? "/checkout"
+    : `/login?redirect=${encodeURIComponent("/checkout")}`;
 
   return (
     <div className="rounded-lg border border-border bg-card p-5 space-y-4">
@@ -29,9 +35,22 @@ export function CartSummary() {
       </div>
 
       <div className="space-y-2 pt-2">
-        <Button asChild className="w-full" size="lg">
-          <Link href="/checkout">Proceed to Checkout</Link>
+        <Button asChild className="w-full" size="lg" disabled={isLoading}>
+          <Link href={checkoutHref}>
+            {user ? "Proceed to Checkout" : "Sign in to Checkout"}
+          </Link>
         </Button>
+        {!user && !isLoading && (
+          <p className="text-center text-xs text-muted-foreground">
+            Don&apos;t have an account?{" "}
+            <Link
+              href={`/register?redirect=${encodeURIComponent("/checkout")}`}
+              className="font-medium text-foreground underline underline-offset-4 hover:opacity-80"
+            >
+              Register
+            </Link>
+          </p>
+        )}
 
         <Button
           variant="outline"

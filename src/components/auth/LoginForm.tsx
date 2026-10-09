@@ -112,7 +112,11 @@ export function LoginForm() {
       <p className="text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
         <Link
-          href="/register"
+          href={
+            redirectTo && redirectTo !== "/"
+              ? `/register?redirect=${encodeURIComponent(redirectTo)}`
+              : "/register"
+          }
           className="font-medium text-foreground underline underline-offset-4 hover:opacity-80"
         >
           Create an account
