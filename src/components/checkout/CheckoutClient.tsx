@@ -113,7 +113,7 @@ export function CheckoutClient() {
       <div className="pb-4 border-b border-border">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Checkout</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          Simulated checkout — no actual charge will be made.
+          Enter your shipping details below to complete your order.
         </p>
       </div>
 
@@ -140,7 +140,7 @@ export function CheckoutClient() {
                   <Input
                     id="fullName"
                     name="fullName"
-                    placeholder="John Doe"
+                    placeholder="Your full name"
                     value={formData.fullName}
                     onChange={handleChange}
                     required
@@ -153,7 +153,7 @@ export function CheckoutClient() {
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="you@email.com"
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -166,7 +166,7 @@ export function CheckoutClient() {
                     id="phone"
                     name="phone"
                     type="tel"
-                    placeholder="+1 555-0192"
+                    placeholder="+1 (555) 000-0000"
                     value={formData.phone}
                     onChange={handleChange}
                     required
@@ -178,7 +178,7 @@ export function CheckoutClient() {
                   <Input
                     id="address"
                     name="address"
-                    placeholder="123 Main Street, Apt 4B"
+                    placeholder="Street address, apartment, suite, etc."
                     value={formData.address}
                     onChange={handleChange}
                     required
@@ -190,7 +190,7 @@ export function CheckoutClient() {
                   <Input
                     id="city"
                     name="city"
-                    placeholder="New York"
+                    placeholder="City"
                     value={formData.city}
                     onChange={handleChange}
                     required
@@ -202,7 +202,7 @@ export function CheckoutClient() {
             <div className="rounded-lg border border-border bg-card p-6 space-y-3">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                <span>Simulated payment mode active. No credit card required.</span>
+                <span>Payment upon delivery active. No upfront credit card required.</span>
               </div>
             </div>
 

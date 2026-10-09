@@ -1,5 +1,6 @@
 import { apiClient } from "./client";
 import type { Product, ProductFilterParams } from "@/types";
+import { isTestOrMockProduct } from "../utils";
 
 export async function getProducts(
   params?: ProductFilterParams,
@@ -14,10 +15,14 @@ export async function getProducts(
   if (params?.offset !== undefined) queryParams.offset = params.offset;
   if (params?.limit !== undefined) queryParams.limit = params.limit;
 
-  return apiClient<Product[]>("/products", {
+  const products = await apiClient<Product[]>("/products", {
     params: queryParams,
     ...options,
   });
+
+  return Array.isArray(products)
+    ? products.filter((p) => !isTestOrMockProduct(p))
+    : [];
 }
 
 export async function getProduct(
@@ -38,17 +43,23 @@ export async function getRelatedProducts(
   id: number | string,
   options?: RequestInit
 ): Promise<Product[]> {
-  return apiClient<Product[]>(`/products/${id}/related`, options);
+  const products = await apiClient<Product[]>(`/products/${id}/related`, options);
+  return Array.isArray(products)
+    ? products.filter((p) => !isTestOrMockProduct(p))
+    : [];
 }
 
 export async function getRelatedProductsBySlug(
   slug: string,
   options?: RequestInit
 ): Promise<Product[]> {
-  return apiClient<Product[]>(
+  const products = await apiClient<Product[]>(
     `/products/slug/${encodeURIComponent(slug)}/related`,
     options
   );
+  return Array.isArray(products)
+    ? products.filter((p) => !isTestOrMockProduct(p))
+    : [];
 }
 
 export async function createProduct(

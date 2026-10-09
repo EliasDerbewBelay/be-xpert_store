@@ -54,9 +54,11 @@ export default async function HomePage() {
 
         <div className="w-full sm:w-auto shrink-0 flex items-center justify-center p-6 bg-secondary/50 rounded-lg border border-border">
           <div className="text-center space-y-1">
-            <p className="text-3xl font-bold text-foreground">100+</p>
+            <p className="text-3xl font-bold text-foreground">
+              {featuredProducts.length > 0 ? `${featuredProducts.length}+` : "25+"}
+            </p>
             <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-              Verified Items
+              Curated Items
             </p>
           </div>
         </div>

@@ -1,10 +1,14 @@
 import { apiClient } from "./client";
 import type { Category, Product } from "@/types";
+import { isTestOrMockCategory, isTestOrMockProduct } from "../utils";
 
 export async function getCategories(
   options?: RequestInit
 ): Promise<Category[]> {
-  return apiClient<Category[]>("/categories", options);
+  const categories = await apiClient<Category[]>("/categories", options);
+  return Array.isArray(categories)
+    ? categories.filter((c) => !isTestOrMockCategory(c))
+    : [];
 }
 
 export async function getCategory(
@@ -25,5 +29,8 @@ export async function getCategoryProducts(
   id: number | string,
   options?: RequestInit
 ): Promise<Product[]> {
-  return apiClient<Product[]>(`/categories/${id}/products`, options);
+  const products = await apiClient<Product[]>(`/categories/${id}/products`, options);
+  return Array.isArray(products)
+    ? products.filter((p) => !isTestOrMockProduct(p))
+    : [];
 }

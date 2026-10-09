@@ -32,13 +32,6 @@ interface ProductFormDialogProps {
   onSuccess: (product: Product, isNew: boolean) => void;
 }
 
-const SAMPLE_IMAGES = [
-  "https://picsum.photos/640",
-  "https://i.imgur.com/ZANVnHE.jpeg",
-  "https://i.imgur.com/Qphac99.jpeg",
-  "https://i.imgur.com/qNOjJje.jpeg",
-];
-
 export function ProductFormDialog({
   open,
   onOpenChange,
@@ -66,14 +59,14 @@ export function ProductFormDialog({
       setImageUrl(
         productToEdit.images && productToEdit.images.length > 0
           ? productToEdit.images[0]
-          : "https://picsum.photos/640"
+          : ""
       );
     } else {
       setTitle("");
       setPrice("");
       setCategoryId(categories.length > 0 ? String(categories[0].id) : "");
       setDescription("");
-      setImageUrl("https://picsum.photos/640");
+      setImageUrl("");
     }
     setError(null);
   }, [productToEdit, categories, open]);
@@ -233,24 +226,9 @@ export function ProductFormDialog({
                 id="product-image"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="https://picsum.photos/640"
+                placeholder="https://images.example.com/product.jpg"
                 required
               />
-            </div>
-
-            {/* Presets */}
-            <div className="flex items-center gap-1.5 pt-1 text-xs text-muted-foreground">
-              <span>Quick sample:</span>
-              {SAMPLE_IMAGES.map((sample, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setImageUrl(sample)}
-                  className="px-2 py-0.5 rounded border border-border bg-secondary hover:bg-muted text-[11px] transition-colors"
-                >
-                  Preset {idx + 1}
-                </button>
-              ))}
             </div>
 
             {/* Live Preview */}

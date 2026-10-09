@@ -48,12 +48,6 @@ export function LoginForm() {
     }
   };
 
-  const handleUseDemoAccount = () => {
-    setEmail("john@mail.com");
-    setPassword("changeme");
-    setError(null);
-  };
-
   return (
     <div className="w-full max-w-md mx-auto space-y-6">
       <div className="space-y-2 text-center">
@@ -83,7 +77,7 @@ export function LoginForm() {
                 id="login-email"
                 type="email"
                 autoComplete="email"
-                placeholder="name@example.com"
+                placeholder="you@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -112,16 +106,6 @@ export function LoginForm() {
           <Button type="submit" disabled={isSubmitting} className="w-full">
             {isSubmitting ? "Signing in..." : "Sign In"}
           </Button>
-
-          <div className="pt-2">
-            <button
-              type="button"
-              onClick={handleUseDemoAccount}
-              className="w-full text-xs text-center text-muted-foreground hover:text-foreground py-1 border border-dashed border-border rounded transition-colors"
-            >
-              Fill Demo Credentials (john@mail.com / changeme)
-            </button>
-          </div>
         </form>
       </div>
 

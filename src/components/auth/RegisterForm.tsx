@@ -107,7 +107,7 @@ export function RegisterForm() {
                 id="reg-name"
                 type="text"
                 autoComplete="name"
-                placeholder="John Doe"
+                placeholder="Your full name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -124,7 +124,7 @@ export function RegisterForm() {
                 id="reg-email"
                 type="email"
                 autoComplete="email"
-                placeholder="name@example.com"
+                placeholder="you@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

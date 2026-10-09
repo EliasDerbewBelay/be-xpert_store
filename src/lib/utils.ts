@@ -78,3 +78,47 @@ export function sanitizeImageUrls(urls: unknown): string[] {
 
   return sanitized.length > 0 ? sanitized : [PLACEHOLDER_IMAGE];
 }
+
+/**
+ * Identifies test, mock, or bot-generated products from public sandbox APIs.
+ */
+export function isTestOrMockProduct(product: {
+  title?: string;
+  description?: string;
+  category?: { name?: string };
+}): boolean {
+  if (!product) return true;
+  const title = (product.title || "").toLowerCase().trim();
+  const desc = (product.description || "").toLowerCase().trim();
+  const catName = (product.category?.name || "").toLowerCase().trim();
+
+  // Automated bot patterns like title-<uuid> or desc-<uuid>
+  if (/^title-[0-9a-f-]{8,}/i.test(title)) return true;
+  if (/^desc-[0-9a-f-]{8,}/i.test(desc)) return true;
+
+  // Generic test/mock titles
+  if (/^(test|mock|dummy|sample)\b/i.test(title)) return true;
+  if (title === "test" || title === "mock" || title === "dummy") return true;
+
+  // Bot-generated category patterns
+  if (/_[0-9a-f]{12,}/i.test(catName)) return true;
+  if (catName === "test" || /^test\b/i.test(catName)) return true;
+
+  return false;
+}
+
+/**
+ * Identifies test or mock categories from public sandbox APIs.
+ */
+export function isTestOrMockCategory(category: { name?: string }): boolean {
+  if (!category || !category.name) return true;
+  const name = category.name.toLowerCase().trim();
+
+  if (/^(test|mock|dummy|sample)\b/i.test(name)) return true;
+  if (/_[0-9a-f]{12,}/i.test(name)) return true;
+  if (/^new category\b/i.test(name)) return true;
+  if (name === "my category" || name === "updated category name") return true;
+
+  return false;
+}
+

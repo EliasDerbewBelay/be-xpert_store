@@ -173,8 +173,8 @@ export function AdminDashboardClient() {
             <span className="text-xs uppercase tracking-wider font-medium">Catalog Items</span>
             <Package className="h-4 w-4" />
           </div>
-          <p className="text-2xl font-bold">100+</p>
-          <p className="text-xs text-muted-foreground">Active in remote inventory</p>
+          <p className="text-2xl font-bold">{products.length}</p>
+          <p className="text-xs text-muted-foreground">Active in catalog</p>
         </div>
 
         <div className="rounded-lg border border-border bg-card p-5 space-y-1">

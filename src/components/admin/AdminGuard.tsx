@@ -3,10 +3,9 @@
 import React, { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import { useToast } from "@/lib/toast/toast-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { ShieldAlert, ShieldCheck, ArrowLeft, LogIn } from "lucide-react";
+import { ShieldAlert, ArrowLeft, LogIn } from "lucide-react";
 import Link from "next/link";
 
 interface AdminGuardProps {
@@ -14,29 +13,15 @@ interface AdminGuardProps {
 }
 
 export function AdminGuard({ children }: AdminGuardProps) {
-  const { user, isLoading, login } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const { success, error } = useToast();
-  const [isSwitching, setIsSwitching] = React.useState(false);
 
   useEffect(() => {
     if (!isLoading && !user) {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
     }
   }, [user, isLoading, router, pathname]);
-
-  const handleDemoAdminLogin = async () => {
-    try {
-      setIsSwitching(true);
-      await login({ email: "admin@mail.com", password: "admin123" });
-      success("Logged in as Admin (admin@mail.com)");
-    } catch {
-      error("Failed to sign in as demo admin.");
-    } finally {
-      setIsSwitching(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -74,23 +59,12 @@ export function AdminGuard({ children }: AdminGuardProps) {
           </p>
         </div>
 
-        <div className="rounded-lg border border-border bg-card p-4 text-left text-xs text-muted-foreground space-y-2">
-          <div className="flex items-center gap-1.5 font-semibold text-foreground">
-            <ShieldCheck className="h-4 w-4 text-primary" />
-            <span>Demo Admin Credentials</span>
-          </div>
-          <p>Email: <span className="font-mono text-foreground">admin@mail.com</span></p>
-          <p>Password: <span className="font-mono text-foreground">admin123</span></p>
-        </div>
-
-        <div className="pt-2 flex flex-col sm:flex-row gap-2.5 justify-center">
-          <Button
-            onClick={handleDemoAdminLogin}
-            disabled={isSwitching}
-            className="gap-2"
-          >
-            <LogIn className="h-4 w-4" />
-            <span>{isSwitching ? "Switching..." : "Switch to Admin Account"}</span>
+        <div className="pt-4 flex flex-col sm:flex-row gap-2.5 justify-center">
+          <Button asChild>
+            <Link href="/login?redirect=/admin" className="gap-2">
+              <LogIn className="h-4 w-4" />
+              <span>Sign In with Admin Account</span>
+            </Link>
           </Button>
 
           <Button asChild variant="outline">

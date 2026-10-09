@@ -82,9 +82,9 @@ src/
 | `/categories` | Complete categories list |
 | `/categories/[slug]` | Category details and products belonging to that category |
 | `/cart` | Interactive shopping cart (quantity controls, remove item, subtotal, clear cart) |
-| `/checkout` | Simulated checkout form (validation, address details, order summary) |
+| `/checkout` | Checkout form (validation, shipping details, order summary) |
 | `/checkout/success` | Order confirmation screen with order reference number |
-| `/login` | User login (stores JWT tokens, includes demo account helper) |
+| `/login` | User login (secure JWT tokens authentication) |
 | `/register` | User registration (name, email, password, confirm password) |
 | `/profile` | Authenticated profile (protected route with `AuthGuard`) |
 | `/admin` | Professional Admin Dashboard (protected by `AdminGuard`, live product CRUD, stats, filters) |
@@ -118,6 +118,7 @@ src/
 3. **Cart State & Local Persistence**: Managed by `CartProvider` using `localStorage` under `escuela_cart_items_v1`. Adding duplicate items increments quantity; line items can be adjusted or removed, and subtotal is dynamically computed.
 4. **Token Management & Graceful Refresh**: Access and refresh tokens are stored in `localStorage`. If an access token expires when accessing `/auth/profile`, the system automatically attempts token refresh before falling back to logout.
 5. **Route Protection (`AuthGuard`)**: `/profile` verifies the user session and gracefully redirects unauthenticated visitors to `/login?redirect=/profile`.
+6. **Robust Test & Bot Data Filtering**: External sandbox test/bot generated entries are filtered out at the service layer so storefront browsing remains clean and curated.
 
 ---
 
@@ -152,10 +153,10 @@ npm run start
 
 ---
 
-## 7. Testing Accounts
+## 7. User Accounts
 
 You can test authentication by:
 - Creating a new account on `/register`.
-- Or using the pre-seeded EscuelaJS demo user:
-  - **Email**: `john@mail.com`
-  - **Password**: `changeme`
+- Or signing in with an existing registered user account.
+
+# be-xpert_store

@@ -39,7 +39,7 @@ export function CheckoutSuccessClient() {
           Order placed successfully.
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base">
-          Thank you for your purchase. We&apos;ve received your simulated order.
+          Thank you for your purchase. We&apos;ve received your order and are processing it.
         </p>
       </div>
 
