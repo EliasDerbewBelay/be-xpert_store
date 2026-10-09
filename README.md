@@ -87,6 +87,7 @@ src/
 | `/login` | User login (stores JWT tokens, includes demo account helper) |
 | `/register` | User registration (name, email, password, confirm password) |
 | `/profile` | Authenticated profile (protected route with `AuthGuard`) |
+| `/admin` | Professional Admin Dashboard (protected by `AdminGuard`, live product CRUD, stats, filters) |
 
 ---
 
